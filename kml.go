@@ -503,7 +503,20 @@ func Pair(children ...Element) *CompoundElement { return newCE("Pair", children)
 func PhoneNumber(value string) *SimpleElement { return newSEString("phoneNumber", value) }
 
 // Placemark returns a new Placemark element.
-func Placemark(children ...Element) *CompoundElement { return newCE("Placemark", children) }
+func Placemark(id string, children ...Element) *SharedElement {
+	return &SharedElement{
+		CompoundElement: CompoundElement{
+			StartElement: xml.StartElement{
+				Name: xml.Name{Local: "Placemark"},
+				Attr: []xml.Attr{
+					{Name: xml.Name{Local: "id"}, Value: id},
+				},
+			},
+			children: children,
+		},
+		id: id,
+	}
+}
 
 // Point returns a new Point element.
 func Point(children ...Element) *CompoundElement { return newCE("Point", children) }

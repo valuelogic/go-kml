@@ -147,6 +147,7 @@ func TestCompoundElements(t *testing.T) {
 	for _, tc := range []testCase{
 		{
 			e: Placemark(
+				"123",
 				Name("Easy trail"),
 				ExtendedData(
 					SchemaData("#TrailHeadTypeId",
@@ -159,7 +160,7 @@ func TestCompoundElements(t *testing.T) {
 					Coordinates(Coordinate{Lon: -122.000, Lat: 37.002}),
 				),
 			),
-			want: `<Placemark>` +
+			want: `<Placemark id="123">` +
 				`<name>Easy trail</name>` +
 				`<ExtendedData>` +
 				`<SchemaData schemaUrl="#TrailHeadTypeId">` +
@@ -236,13 +237,14 @@ func TestSharedStyles(t *testing.T) {
 			e: Folder(
 				style0,
 				Placemark(
+					"234",
 					StyleURL(style0.URL()),
 				),
 			),
 			want: `<Folder>` +
 				`<Style id="0">` +
 				`</Style>` +
-				`<Placemark>` +
+				`<Placemark id="234">` +
 				`<styleUrl>#0</styleUrl>` +
 				`</Placemark>` +
 				`</Folder>`,
@@ -256,6 +258,7 @@ func TestSharedStyles(t *testing.T) {
 					normalPlacemarkStyle,
 					exampleStyleMap,
 					Placemark(
+						"345",
 						Name("Roll over this icon"),
 						StyleURL(exampleStyleMap.URL()),
 						Point(
@@ -292,7 +295,7 @@ func TestSharedStyles(t *testing.T) {
 				`<styleUrl>#highlightPlacemark</styleUrl>` +
 				`</Pair>` +
 				`</StyleMap>` +
-				`<Placemark>` +
+				`<Placemark id="345">` +
 				`<name>Roll over this icon</name>` +
 				`<styleUrl>#exampleStyleMap</styleUrl>` +
 				`<Point>` +
@@ -349,6 +352,7 @@ func TestWrite(t *testing.T) {
 		{
 			e: KML(
 				Placemark(
+					"abc",
 					Name("Simple placemark"),
 					Description("Attached to the ground. Intelligently places itself at the height of the underlying terrain."),
 					Point(
@@ -358,7 +362,7 @@ func TestWrite(t *testing.T) {
 			),
 			want: `<?xml version="1.0" encoding="UTF-8"?>` + "\n" +
 				`<kml xmlns="http://www.opengis.net/kml/2.2">` +
-				`<Placemark>` +
+				`<Placemark id="abc">` +
 				`<name>Simple placemark</name>` +
 				`<description>Attached to the ground. Intelligently places itself at the height of the underlying terrain.</description>` +
 				`<Point>` +
@@ -371,6 +375,7 @@ func TestWrite(t *testing.T) {
 			e: KML(
 				Document(
 					Placemark(
+						"456",
 						Name("Entity references example"),
 						Description(
 							`<h1>Entity references are hard to type!</h1>`+
@@ -387,7 +392,7 @@ func TestWrite(t *testing.T) {
 			want: `<?xml version="1.0" encoding="UTF-8"?>` + "\n" +
 				`<kml xmlns="http://www.opengis.net/kml/2.2">` +
 				`<Document>` +
-				`<Placemark>` +
+				`<Placemark id="456">` +
 				`<name>Entity references example</name>` +
 				`<description>` +
 				`&lt;h1&gt;Entity references are hard to type!&lt;/h1&gt;` +
@@ -449,6 +454,7 @@ func TestWrite(t *testing.T) {
 		{
 			e: KML(
 				Placemark(
+					"xD",
 					Name("The Pentagon"),
 					Polygon(
 						Extrude(true),
@@ -482,7 +488,7 @@ func TestWrite(t *testing.T) {
 			),
 			want: `<?xml version="1.0" encoding="UTF-8"?>` + "\n" +
 				`<kml xmlns="http://www.opengis.net/kml/2.2">` +
-				`<Placemark>` +
+				`<Placemark id="xD">` +
 				`<name>The Pentagon</name>` +
 				`<Polygon>` +
 				`<extrude>1</extrude>` +
@@ -524,6 +530,7 @@ func TestWrite(t *testing.T) {
 			e: GxKML(
 				Folder(
 					Placemark(
+						"zzz",
 						GxTrack(
 							When(time.Date(2010, 5, 28, 2, 2, 9, 0, time.UTC)),
 							When(time.Date(2010, 5, 28, 2, 2, 35, 0, time.UTC)),
@@ -546,7 +553,7 @@ func TestWrite(t *testing.T) {
 			want: `<?xml version="1.0" encoding="UTF-8"?>` + "\n" +
 				`<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">` +
 				`<Folder>` +
-				`<Placemark>` +
+				`<Placemark id="zzz">` +
 				`<gx:Track>` +
 				`<when>2010-05-28T02:02:09Z</when>` +
 				`<when>2010-05-28T02:02:35Z</when>` +
