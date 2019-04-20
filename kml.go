@@ -281,7 +281,17 @@ func Cookie(value string) *SimpleElement { return newSEString("cookie", value) }
 func Create(children ...Element) *CompoundElement { return newCE("Create", children) }
 
 // Data returns a new Data element.
-func Data(children ...Element) *CompoundElement { return newCE("Data", children) }
+func Data(name string, children ...Element) *CompoundElement {
+	return &CompoundElement{
+		StartElement: xml.StartElement{
+			Name: xml.Name{Local: "Data"},
+			Attr: []xml.Attr{
+				{Name: xml.Name{Local: "name"}, Value: name},
+			},
+		},
+		children: children,
+	}
+}
 
 // Delete returns a new Delete element.
 func Delete(children ...Element) *CompoundElement { return newCE("Delete", children) }

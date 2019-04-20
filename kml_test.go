@@ -137,6 +137,10 @@ func TestSimpleElements(t *testing.T) {
 			Style(),
 			`<Style></Style>`,
 		},
+		{
+			Data("groupName", Value("group A")),
+			`<Data name="groupName"><value>group A</value></Data>`,
+		},
 		// FIXME More simple elements
 	} {
 		tc.testMarshal(t)
